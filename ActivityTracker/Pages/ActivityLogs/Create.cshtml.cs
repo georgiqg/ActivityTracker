@@ -25,6 +25,7 @@ namespace ActivityTracker.Pages.ActivityLogs
             Activities = _context.Activity
                 .Where(a => a.ActivityValidFrom <= DateTime.Today && a.ActivityValidTo >= DateTime.Today)
                 .Include(a => a.Unit)
+                .OrderBy(a => a.ActivityName)
                 .ToList();
             ViewData["ActivityId"] = new SelectList(Activities, "ActivityId", "ActivityName");
             ViewData["strActivities"] = string.Join("|", Activities.Select(x => x.ActivityId + "#" + x.PointsPerUnit + "#" + x.MaxPointsPerDay + "#" + x.Unit.UnitName));
@@ -46,6 +47,8 @@ namespace ActivityTracker.Pages.ActivityLogs
             {
                 Activities = _context.Activity
                     .Where(a => a.ActivityValidFrom <= DateTime.Today && a.ActivityValidTo >= DateTime.Today)
+                    .Include(a => a.Unit)
+                    .OrderBy(a => a.ActivityName)
                     .ToList();
                 ViewData["ActivityId"] = new SelectList(Activities, "ActivityId", "ActivityName");
 
