@@ -1,0 +1,73 @@
+﻿@page
+@model ActivityTracker.Pages.Activities.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Activity</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Activity.UserId" class="control-label"></label>
+                <input asp-for="Activity.UserId" class="form-control" value="georgiqg" readonly="@true" />
+                <span asp-validation-for="Activity.UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Activity.ActivityName" class="control-label"></label>
+                <input asp-for="Activity.ActivityName" class="form-control" />
+                <span asp-validation-for="Activity.ActivityName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Activity.UnitId" class="control-label"></label>
+                <select asp-for="Activity.UnitId" class="form-control" asp-items="ViewBag.UnitId">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="Activity.UnitId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Activity.CustomUnitId" class="control-label"></label>
+                <select asp-for="Activity.CustomUnitId" class="form-control" asp-items="ViewBag.CustomUnitId">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="Activity.CustomUnitId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Activity.PointsPerUnit" class="control-label"></label>
+                <input asp-for="Activity.PointsPerUnit" class="form-control" />
+                <span asp-validation-for="Activity.PointsPerUnit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Activity.MaxPointsPerDay" class="control-label"></label>
+                <input asp-for="Activity.MaxPointsPerDay" class="form-control" />
+                <span asp-validation-for="Activity.MaxPointsPerDay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Activity.ActivityValidFrom" class="control-label"></label>
+                <input asp-for="Activity.ActivityValidFrom" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Activity.ActivityValidFrom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Activity.ActivityValidTo" class="control-label"></label>
+                <input asp-for="Activity.ActivityValidTo" class="form-control" value="2049-12-31" />
+                <span asp-validation-for="Activity.ActivityValidTo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

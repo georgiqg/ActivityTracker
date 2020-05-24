@@ -1,0 +1,78 @@
+﻿@page
+@model ActivityTracker.Pages.Activities.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Activity[0].UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activity[0].ActivityName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activity[0].PointsPerUnit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activity[0].MaxPointsPerDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activity[0].ActivityValidFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activity[0].ActivityValidTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activity[0].Unit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activity[0].CustomUnit)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Activity) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActivityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PointsPerUnit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxPointsPerDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActivityValidFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActivityValidTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit.UnitName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomUnit.CustomUnitName)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ActivityId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ActivityId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ActivityId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
