@@ -6,6 +6,7 @@ using ActivityTracker.Data;
 using ActivityTracker.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace ActivityTracker.Pages.ActivityLogs
 {
@@ -20,8 +21,10 @@ namespace ActivityTracker.Pages.ActivityLogs
 
         public IActionResult OnGet()
         {
-            ViewData["ActivityId"] = new SelectList(_context.Activity, "ActivityId", "ActivityName");
-            Activities = _context.Activity.ToList();
+            Activities = _context.Activity
+                .Where(a => a.ActivityValidFrom <= DateTime.Today && a.ActivityValidTo >= DateTime.Today)
+                .ToList();
+            ViewData["ActivityId"] = new SelectList(Activities, "ActivityId", "ActivityName");
             ViewData["strActivities"] = string.Join("|", Activities.Select(x => x.ActivityId + "#" + x.PointsPerUnit + "#" + x.MaxPointsPerDay));
 
             return Page();
@@ -39,8 +42,10 @@ namespace ActivityTracker.Pages.ActivityLogs
         {
             if (!ModelState.IsValid)
             {
-                ViewData["ActivityId"] = new SelectList(_context.Activity, "ActivityId", "ActivityName");
-                Activities = _context.Activity.ToList();
+                Activities = _context.Activity
+                    .Where(a => a.ActivityValidFrom <= DateTime.Today && a.ActivityValidTo >= DateTime.Today)
+                    .ToList();
+                ViewData["ActivityId"] = new SelectList(Activities, "ActivityId", "ActivityName");
 
                 return Page();
             }
