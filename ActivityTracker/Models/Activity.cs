@@ -22,7 +22,7 @@ namespace ActivityTracker.Models
         [Display(Name = "Custom unit")]
         public int? CustomUnitId { get; set; }
 
-        [Required, Display(Name = "Points")]
+        [Required, Display(Name = "Points per unit")]
         [Range(0.01, 9999999999999999.99)]
         [Column(TypeName = "decimal(18,2)")]
         public decimal PointsPerUnit { get; set; }

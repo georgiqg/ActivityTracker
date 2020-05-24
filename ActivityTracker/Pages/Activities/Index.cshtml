@@ -14,9 +14,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Activity[0].UserId)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Activity[0].ActivityName)
             </th>
             <th>
@@ -41,38 +38,36 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Activity) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ActivityName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PointsPerUnit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxPointsPerDay)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ActivityValidFrom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ActivityValidTo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Unit.UnitName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustomUnit.CustomUnitName)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ActivityId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ActivityId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ActivityId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Activity)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActivityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PointsPerUnit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaxPointsPerDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActivityValidFrom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActivityValidTo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unit.UnitName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomUnit.CustomUnitName)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ActivityId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ActivityId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ActivityId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

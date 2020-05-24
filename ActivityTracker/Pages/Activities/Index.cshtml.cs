@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ActivityTracker.Data;
 using ActivityTracker.Models;
+using System.Linq;
+using System;
 
 namespace ActivityTracker.Pages.Activities
 {
@@ -22,7 +24,10 @@ namespace ActivityTracker.Pages.Activities
         {
             Activity = await _context.Activity
                 .Include(a => a.CustomUnit)
-                .Include(a => a.Unit).ToListAsync();
+                .Include(a => a.Unit)
+                .OrderBy(a => (a.ActivityValidFrom <= DateTime.Today && a.ActivityValidTo >= DateTime.Today ? 1 : 2))
+                .ThenBy(a => a.ActivityName)
+                .ToListAsync();
         }
     }
 }
