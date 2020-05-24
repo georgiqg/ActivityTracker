@@ -25,10 +25,14 @@ namespace ActivityTracker.Pages.ActivityLogs
             Activities = _context.Activity
                 .Where(a => a.ActivityValidFrom <= DateTime.Today && a.ActivityValidTo >= DateTime.Today)
                 .Include(a => a.Unit)
+                .Include(a => a.CustomUnit)
                 .OrderBy(a => a.ActivityName)
                 .ToList();
+
+            Activities.ToList().ForEach(a => a.SetUnitName());
+
             ViewData["ActivityId"] = new SelectList(Activities, "ActivityId", "ActivityName");
-            ViewData["strActivities"] = string.Join("|", Activities.Select(x => x.ActivityId + "#" + x.PointsPerUnit + "#" + x.MaxPointsPerDay + "#" + x.Unit.UnitName));
+            ViewData["strActivities"] = string.Join("|", Activities.Select(x => x.ActivityId + "#" + x.PointsPerUnit + "#" + x.MaxPointsPerDay + "#" + x.UnitName));
 
             return Page();
         }

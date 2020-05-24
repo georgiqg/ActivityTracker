@@ -23,6 +23,9 @@
                 @Html.DisplayNameFor(model => model.ActivityLog[0].Units)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ActivityLog[0].Activity.UnitName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ActivityLog[0].TotalPoints)
             </th>
             <th></th>
@@ -40,6 +43,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Units)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Activity.UnitName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.TotalPoints)

@@ -46,9 +46,13 @@ namespace ActivityTracker.Models
         public CustomUnit CustomUnit { get; set; }
         public List<ActivityLog> ActivityLogs { get; set; }
 
-        public string GetUnitName()
+        [NotMapped]
+        [Display(Name = "Unit name")]
+        public string UnitName { get; set; }
+
+        public void SetUnitName()
         {
-            return Unit != null ? Unit.UnitName : "unknown";
+            UnitName = Unit?.UnitName ?? CustomUnit?.CustomUnitName;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

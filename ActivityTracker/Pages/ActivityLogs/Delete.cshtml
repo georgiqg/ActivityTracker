@@ -25,7 +25,7 @@
             @Html.DisplayFor(model => model.ActivityLog.LogDate)
         </dd>
         <dt class="col-sm-2">
-            @Model.UnitName
+            @Html.DisplayFor(model => model.ActivityLog.Activity.UnitName)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ActivityLog.Units)

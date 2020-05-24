@@ -20,9 +20,6 @@ namespace ActivityTracker.Pages.ActivityLogs
         [BindProperty]
         public ActivityLog ActivityLog { get; set; }
 
-        [BindProperty]
-        public string UnitName { get; set; }
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -33,6 +30,7 @@ namespace ActivityTracker.Pages.ActivityLogs
             ActivityLog = await _context.ActivityLog
                 .Include(a => a.Activity)
                 .Include(a => a.Activity.Unit)
+                .Include(a => a.Activity.CustomUnit)
                 .FirstOrDefaultAsync(m => m.ActivityLogId == id);
 
             if (ActivityLog == null)
@@ -41,7 +39,7 @@ namespace ActivityTracker.Pages.ActivityLogs
             }
 
             ActivityLog.SetTotalPoints();
-            UnitName = ActivityLog.Activity.GetUnitName();
+            ActivityLog.Activity.SetUnitName();
 
             return Page();
         }
