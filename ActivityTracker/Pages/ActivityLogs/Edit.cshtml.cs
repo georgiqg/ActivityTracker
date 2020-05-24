@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,20 +6,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ActivityTracker.Data;
 using ActivityTracker.Models;
+using System.Collections.Generic;
 
 namespace ActivityTracker.Pages.ActivityLogs
 {
     public class EditModel : PageModel
     {
-        private readonly ActivityTracker.Data.ActivityTrackerContext _context;
+        private readonly ActivityTrackerContext _context;
 
-        public EditModel(ActivityTracker.Data.ActivityTrackerContext context)
+        public EditModel(ActivityTrackerContext context)
         {
             _context = context;
         }
 
         [BindProperty]
         public ActivityLog ActivityLog { get; set; }
+
+        public IList<Activity> Activities { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,7 +38,13 @@ namespace ActivityTracker.Pages.ActivityLogs
             {
                 return NotFound();
             }
-           ViewData["ActivityId"] = new SelectList(_context.Activity, "ActivityId", "ActivityName");
+
+            ActivityLog.SetTotalPoints();
+
+            ViewData["ActivityId"] = new SelectList(_context.Activity, "ActivityId", "ActivityName");
+            Activities = _context.Activity.ToList();
+            ViewData["strActivities"] = string.Join("|", Activities.Select(x => x.ActivityId + "#" + x.PointsPerUnit + "#" + x.MaxPointsPerDay));
+
             return Page();
         }
 

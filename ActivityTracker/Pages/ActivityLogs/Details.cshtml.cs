@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,9 +10,9 @@ namespace ActivityTracker.Pages.ActivityLogs
 {
     public class DetailsModel : PageModel
     {
-        private readonly ActivityTracker.Data.ActivityTrackerContext _context;
+        private readonly ActivityTrackerContext _context;
 
-        public DetailsModel(ActivityTracker.Data.ActivityTrackerContext context)
+        public DetailsModel(ActivityTrackerContext context)
         {
             _context = context;
         }
@@ -35,6 +33,9 @@ namespace ActivityTracker.Pages.ActivityLogs
             {
                 return NotFound();
             }
+
+            ActivityLog.SetTotalPoints();
+
             return Page();
         }
     }

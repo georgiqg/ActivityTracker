@@ -4,14 +4,16 @@ using ActivityTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ActivityTracker.Migrations
 {
     [DbContext(typeof(ActivityTrackerContext))]
-    partial class ActivityTrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20200524115510_UnmapField_TotalPoints")]
+    partial class UnmapField_TotalPoints
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

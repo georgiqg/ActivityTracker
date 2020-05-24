@@ -26,7 +26,7 @@
                     }
                 }
 
-                $("#totalPoints").val(activityFound ? (Math.min(units * pointsPerUnit, maxPointsPerDay)) : "");
+                $("#totalPoints").val(activityFound ? (Math.min(units * pointsPerUnit, maxPointsPerDay).toFixed(2)) : "");
             }
         }
         else {

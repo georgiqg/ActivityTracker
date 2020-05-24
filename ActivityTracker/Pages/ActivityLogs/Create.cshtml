@@ -31,25 +31,20 @@
             </div>
             <div class="form-group">
                 <label asp-for="ActivityLog.Units" class="control-label"></label>
-                <input asp-for="ActivityLog.Units" class="form-control" id="units" />
+                <input id="units" asp-for="ActivityLog.Units" class="form-control" />
                 <span asp-validation-for="ActivityLog.Units" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ActivityLog.TotalPoints" class="control-label"></label>
-                <input asp-for="ActivityLog.TotalPoints" class="form-control" value="" id="totalPoints" readonly />
-                <span asp-validation-for="ActivityLog.TotalPoints" class="text-danger"></span>
+                <input id="totalPoints" asp-for="ActivityLog.TotalPoints" class="form-control" value="" readonly />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
 
+        @*Field used to calculate the total points from JavaScript code*@
         <input type="hidden" id="str-activities" value="@ViewData["strActivities"]" />
-
-        @*@foreach (var item in Model.Activities)
-        {
-            <input id="activity-@item.ActivityId" type="hidden" value="@item.PointsPerUnit" />
-        }*@
     </div>
 </div>
 

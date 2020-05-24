@@ -16,7 +16,7 @@
             <input type="hidden" asp-for="ActivityLog.ActivityLogId" />
             <div class="form-group">
                 <label asp-for="ActivityLog.ActivityId" class="control-label"></label>
-                <select asp-for="ActivityLog.ActivityId" class="form-control" asp-items="ViewBag.ActivityId">
+                <select id="activityId" asp-for="ActivityLog.ActivityId" class="form-control" asp-items="ViewBag.ActivityId">
                     <option value="@Model.ActivityLog.ActivityId"></option>
                 </select>
                 <span asp-validation-for="ActivityLog.ActivityId" class="text-danger"></span>
@@ -33,18 +33,20 @@
             </div>
             <div class="form-group">
                 <label asp-for="ActivityLog.Units" class="control-label"></label>
-                <input asp-for="ActivityLog.Units" class="form-control" />
+                <input id="units" asp-for="ActivityLog.Units" class="form-control" />
                 <span asp-validation-for="ActivityLog.Units" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ActivityLog.TotalPoints" class="control-label"></label>
-                <input asp-for="ActivityLog.TotalPoints" class="form-control" />
-                <span asp-validation-for="ActivityLog.TotalPoints" class="text-danger"></span>
+                <input id="totalPoints" asp-for="ActivityLog.TotalPoints" class="form-control" readonly />
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+
+        @*Field used to calculate the total points from JavaScript code*@
+        <input type="hidden" id="str-activities" value="@ViewData["strActivities"]" />
     </div>
 </div>
 
@@ -54,4 +56,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/activity-logs.js"></script>
 }
