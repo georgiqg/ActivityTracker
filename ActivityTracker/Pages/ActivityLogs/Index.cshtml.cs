@@ -22,7 +22,10 @@ namespace ActivityTracker.Pages.ActivityLogs
         public async Task OnGetAsync()
         {
             ActivityLog = await _context.ActivityLog
-                .Include(a => a.Activity).ToListAsync();
+                .Include(a => a.Activity)
+                .OrderByDescending(a => a.LogDate)
+                .ThenBy(a => a.Activity.ActivityName)
+                .ToListAsync();
 
             ActivityLog.ToList().ForEach(a => a.SetTotalPoints());
         }

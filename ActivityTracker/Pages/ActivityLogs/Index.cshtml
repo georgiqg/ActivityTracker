@@ -14,10 +14,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ActivityLog[0].UserId)
+                @Html.DisplayNameFor(model => model.ActivityLog[0].LogDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ActivityLog[0].LogDate)
+                @Html.DisplayNameFor(model => model.ActivityLog[0].Activity)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ActivityLog[0].Units)
@@ -25,36 +25,31 @@
             <th>
                 @Html.DisplayNameFor(model => model.ActivityLog[0].TotalPoints)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ActivityLog[0].Activity)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.ActivityLog) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LogDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Units)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPoints)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Activity.ActivityName)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ActivityLogId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ActivityLogId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ActivityLogId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.ActivityLog)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LogDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Activity.ActivityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Units)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPoints)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ActivityLogId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ActivityLogId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ActivityLogId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
