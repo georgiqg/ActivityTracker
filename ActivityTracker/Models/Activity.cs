@@ -86,7 +86,7 @@ namespace ActivityTracker.Models
 
             if (MaxPointsPerDay < PointsPerUnit)
             {
-                results.Add(new ValidationResult("The 'Max points' can't be less than 'Points'.", new string[] { "ActivityValidTo" }));
+                results.Add(new ValidationResult("The 'Max points' can't be less than 'Points'.", new string[] { "MaxPointsPerDay" }));
             }
 
             if (ActivityValidTo < ActivityValidFrom)
