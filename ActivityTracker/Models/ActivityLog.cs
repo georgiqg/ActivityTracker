@@ -30,11 +30,6 @@ namespace ActivityTracker.Models
 
         public Activity Activity { get; set; }
 
-        //public decimal GetActivityPoints()
-        //{
-        //    return Math.Min(Activity.MaxPointsPerDay, Activity.PointsPerUnit * Units);
-        //}
-
         public void SetTotalPoints()
         {
             TotalPoints = Math.Min(Activity.MaxPointsPerDay, Activity.PointsPerUnit * Units);
