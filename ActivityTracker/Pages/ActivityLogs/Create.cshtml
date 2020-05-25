@@ -28,6 +28,7 @@
                 <select id="activityId" asp-for="ActivityLog.ActivityId" class="form-control" asp-items="ViewBag.ActivityId">
                     <option value=""></option>
                 </select>
+                <span asp-validation-for="ActivityLog.ActivityId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label id="activity-units" class="control-label">Units</label>

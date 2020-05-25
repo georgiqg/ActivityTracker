@@ -47,6 +47,8 @@ namespace ActivityTracker.Pages.ActivityLogs
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            ValidateData();
+
             if (!ModelState.IsValid)
             {
                 Activities = _context.Activity
@@ -63,6 +65,20 @@ namespace ActivityTracker.Pages.ActivityLogs
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
+        }
+
+        public void ValidateData()
+        {
+            var alreadyAdded = _context.ActivityLog
+                .Where(a => a.UserId == ActivityLog.UserId
+                    && a.ActivityId == ActivityLog.ActivityId
+                    && a.LogDate == ActivityLog.LogDate
+                    && a.ActivityLogId != ActivityLog.ActivityLogId);
+
+            if (alreadyAdded.Any())
+            {
+                ModelState.AddModelError("ActivityLog.ActivityId", "You already have the selected activity for that date.");
+            }
         }
     }
 }
