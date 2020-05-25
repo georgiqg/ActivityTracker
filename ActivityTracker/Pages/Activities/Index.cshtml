@@ -1,11 +1,11 @@
-﻿@page
+﻿@page "{sortOrder?}"
 @model ActivityTracker.Pages.Activities.IndexModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Activities</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -14,25 +14,39 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Activity[0].ActivityName)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.ActivityNameSort">
+                    @Html.DisplayNameFor(model => model.Activity[0].ActivityName)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Activity[0].PointsPerUnit)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.PointsPerUnitSort">
+                    @Html.DisplayNameFor(model => model.Activity[0].PointsPerUnit)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Activity[0].MaxPointsPerDay)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.MaxPointsPerDaySort">
+                    @Html.DisplayNameFor(model => model.Activity[0].MaxPointsPerDay)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Activity[0].ActivityValidFrom)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.ValidFromSort">
+                    @Html.DisplayNameFor(model => model.Activity[0].ActivityValidFrom)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Activity[0].ActivityValidTo)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.ValidToSort">
+                    @Html.DisplayNameFor(model => model.Activity[0].ActivityValidTo)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Activity[0].Unit)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.UnitSort">
+                    @Html.DisplayNameFor(model => model.Activity[0].Unit)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Activity[0].CustomUnit)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.CustomUnitSort">
+                    @Html.DisplayNameFor(model => model.Activity[0].CustomUnit)
+                </a>
             </th>
             <th></th>
         </tr>
