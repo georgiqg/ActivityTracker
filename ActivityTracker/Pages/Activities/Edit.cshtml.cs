@@ -45,6 +45,8 @@ namespace ActivityTracker.Pages.Activities
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            ValidateData();
+
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -74,6 +76,19 @@ namespace ActivityTracker.Pages.Activities
         private bool ActivityExists(int id)
         {
             return _context.Activity.Any(e => e.ActivityId == id);
+        }
+
+        public void ValidateData()
+        {
+            var alreadyAdded = _context.Activity
+                .Where(a => a.ActivityId != Activity.ActivityId
+                    && a.ActivityName.ToLower() == Activity.ActivityName.ToLower()
+                    && (a.ActivityValidFrom <= Activity.ActivityValidTo && a.ActivityValidTo >= Activity.ActivityValidFrom));
+
+            if (alreadyAdded.Any())
+            {
+                ModelState.AddModelError("Activity.ActivityName", "You already have the selected activity for that date range.");
+            }
         }
     }
 }

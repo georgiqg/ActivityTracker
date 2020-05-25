@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ActivityTracker.Data;
 using ActivityTracker.Models;
+using System.Linq;
+using System;
 
 namespace ActivityTracker.Pages.Activities
 {
@@ -30,6 +32,8 @@ namespace ActivityTracker.Pages.Activities
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            ValidateData();
+
             if (!ModelState.IsValid)
             {
                 ViewData["CustomUnitId"] = new SelectList(_context.Set<CustomUnit>(), "CustomUnitId", "CustomUnitName");
@@ -41,6 +45,19 @@ namespace ActivityTracker.Pages.Activities
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
+        }
+
+        public void ValidateData()
+        {
+            var alreadyAdded = _context.Activity
+                .Where(a => a.ActivityId != Activity.ActivityId
+                    && a.ActivityName.ToLower() == Activity.ActivityName.ToLower()
+                    && (a.ActivityValidFrom <= Activity.ActivityValidTo && a.ActivityValidTo >= Activity.ActivityValidFrom));
+
+            if (alreadyAdded.Any())
+            {
+                ModelState.AddModelError("Activity.ActivityName", "You already have the selected activity for that date range.");
+            }
         }
     }
 }
