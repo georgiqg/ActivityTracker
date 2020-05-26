@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Activity Log</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -14,19 +14,29 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ActivityLog[0].LogDate)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.LogDateSort">
+                    @Html.DisplayNameFor(model => model.ActivityLog[0].LogDate)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ActivityLog[0].Activity)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.ActivitySort">
+                    @Html.DisplayNameFor(model => model.ActivityLog[0].Activity)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ActivityLog[0].Units)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.UnitsSort">
+                    @Html.DisplayNameFor(model => model.ActivityLog[0].Units)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ActivityLog[0].Activity.UnitName)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.UnitNameSort">
+                    @Html.DisplayNameFor(model => model.ActivityLog[0].Activity.UnitName)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ActivityLog[0].TotalPoints)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.TotalPointsSort">
+                    @Html.DisplayNameFor(model => model.ActivityLog[0].TotalPoints)
+                </a>
             </th>
             <th></th>
         </tr>
