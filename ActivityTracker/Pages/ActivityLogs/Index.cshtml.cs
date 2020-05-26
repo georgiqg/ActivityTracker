@@ -28,7 +28,7 @@ namespace ActivityTracker.Pages.ActivityLogs
         public async Task OnGetAsync(string sortOrder)
         {
             // Properties used to toggle between ascending and descending order
-            LogDateSort = sortOrder != null || sortOrder == "LogDateSort" ? "LogDateSort_desc" : "LogDateSort";
+            LogDateSort = sortOrder == null || sortOrder == "LogDateSort_desc" ? "LogDateSort" : "LogDateSort_desc";
             ActivitySort = sortOrder == "ActivitySort" ? "ActivitySort_desc" : "ActivitySort";
             UnitsSort = sortOrder == "UnitsSort" ? "UnitsSort_desc" : "UnitsSort";
             UnitNameSort = sortOrder == "UnitNameSort" ? "UnitNameSort_desc" : "UnitNameSort";
@@ -54,30 +54,31 @@ namespace ActivityTracker.Pages.ActivityLogs
                     queryableActivities = queryableActivities.OrderByDescending(a => a.LogDate).ThenBy(a => a.Activity.ActivityName);
                     break;
                 case "ActivitySort":
-                    queryableActivities = queryableActivities.OrderBy(a => a.Activity.ActivityName);
+                    queryableActivities = queryableActivities.OrderBy(a => a.Activity.ActivityName).ThenBy(a => a.LogDate);
                     break;
                 case "ActivitySort_desc":
-                    queryableActivities = queryableActivities.OrderByDescending(a => a.Activity.ActivityName);
+                    queryableActivities = queryableActivities.OrderByDescending(a => a.Activity.ActivityName).ThenByDescending(a => a.LogDate);
                     break;
                 case "UnitsSort":
-                    queryableActivities = queryableActivities.OrderBy(a => a.Units);
+                    queryableActivities = queryableActivities.OrderBy(a => a.Units).ThenByDescending(a => a.LogDate);
                     break;
                 case "UnitsSort_desc":
-                    queryableActivities = queryableActivities.OrderByDescending(a => a.Units);
+                    queryableActivities = queryableActivities.OrderByDescending(a => a.Units).ThenByDescending(a => a.LogDate);
                     break;
                 case "UnitNameSort":
-                    queryableActivities = queryableActivities.OrderBy(a => a.Activity.UnitName);
+                    queryableActivities = queryableActivities.OrderBy(a => a.Activity.UnitName).ThenByDescending(a => a.LogDate);
                     break;
                 case "UnitNameSort_desc":
-                    queryableActivities = queryableActivities.OrderByDescending(a => a.Activity.UnitName);
+                    queryableActivities = queryableActivities.OrderByDescending(a => a.Activity.UnitName).ThenByDescending(a => a.LogDate);
                     break;
                 case "TotalPointsSort":
-                    queryableActivities = queryableActivities.OrderBy(a => a.TotalPoints);
+                    queryableActivities = queryableActivities.OrderBy(a => a.TotalPoints).ThenByDescending(a => a.LogDate);
                     break;
                 case "TotalPointsSort_desc":
-                    queryableActivities = queryableActivities.OrderByDescending(a => a.TotalPoints);
+                    queryableActivities = queryableActivities.OrderByDescending(a => a.TotalPoints).ThenByDescending(a => a.LogDate);
                     break;
                 default:
+                    queryableActivities = queryableActivities.OrderByDescending(a => a.LogDate).ThenBy(a => a.Activity.ActivityName);
                     break;
             }
 

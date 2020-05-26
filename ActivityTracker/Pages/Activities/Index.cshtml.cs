@@ -88,8 +88,7 @@ namespace ActivityTracker.Pages.Activities
                     activities = activities.OrderByDescending(a => a.CustomUnit.CustomUnitName);
                     break;
                 default:
-                    activities = activities
-                        .OrderBy(a => (a.ActivityValidFrom <= DateTime.Today && a.ActivityValidTo >= DateTime.Today ? 1 : 2)).ThenBy(a => a.ActivityName);
+                    activities = activities.OrderBy(a => (a.ActivityValidFrom <= DateTime.Today && a.ActivityValidTo >= DateTime.Today ? 1 : 2)).ThenBy(a => a.ActivityName);
                     break;
             }
 
