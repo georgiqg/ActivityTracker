@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ActivityTracker.Data;
 using ActivityTracker.Models;
+using System.Linq;
 
 namespace ActivityTracker.Pages.CustomUnits
 {
@@ -18,9 +19,29 @@ namespace ActivityTracker.Pages.CustomUnits
 
         public IList<CustomUnit> CustomUnit { get;set; }
 
-        public async Task OnGetAsync()
+        public string CustomUnitNameSort { get; set; }
+
+        public async Task OnGetAsync(string sortOrder)
         {
-            CustomUnit = await _context.CustomUnit.ToListAsync();
+            // Properties used to toggle between ascending and descending order
+            CustomUnitNameSort = sortOrder == null || sortOrder == "CustomUnitNameSort" ? "CustomUnitNameSort_desc" : "CustomUnitNameSort";
+
+            var customUnits = _context.CustomUnit.AsQueryable();
+
+            switch (sortOrder)
+            {
+                case "CustomUnitNameSort":
+                    customUnits = customUnits.OrderBy(cu => cu.CustomUnitName);
+                    break;
+                case "CustomUnitNameSort_desc":
+                    customUnits = customUnits.OrderByDescending(cu => cu.CustomUnitName);
+                    break;
+                default:
+                    customUnits = customUnits.OrderBy(cu => cu.CustomUnitName);
+                    break;
+            }
+
+            CustomUnit = await customUnits.AsNoTracking().ToListAsync();
         }
     }
 }

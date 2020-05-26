@@ -1,29 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ActivityTracker.Data;
 using ActivityTracker.Models;
+using System.Linq;
 
 namespace ActivityTracker.Pages.Units
 {
     public class IndexModel : PageModel
     {
-        private readonly ActivityTracker.Data.ActivityTrackerContext _context;
+        private readonly ActivityTrackerContext _context;
 
-        public IndexModel(ActivityTracker.Data.ActivityTrackerContext context)
+        public IndexModel(ActivityTrackerContext context)
         {
             _context = context;
         }
 
         public IList<Unit> Unit { get;set; }
 
-        public async Task OnGetAsync()
+        public string UnitNameSort { get; set; }
+
+        public async Task OnGetAsync(string sortOrder)
         {
-            Unit = await _context.Unit.ToListAsync();
+            // Properties used to toggle between ascending and descending order
+            UnitNameSort = sortOrder == null || sortOrder == "UnitNameSort" ? "UnitNameSort_desc" : "UnitNameSort";
+
+            var units = _context.Unit.AsQueryable();
+
+            switch (sortOrder)
+            {
+                case "UnitNameSort":
+                    units = units.OrderBy(u => u.UnitName);
+                    break;
+                case "UnitNameSort_desc":
+                    units = units.OrderByDescending(u => u.UnitName);
+                    break;
+                default:
+                    units = units.OrderBy(u => u.UnitName);
+                    break;
+            }
+
+            Unit = await units.AsNoTracking().ToListAsync();
         }
     }
 }
