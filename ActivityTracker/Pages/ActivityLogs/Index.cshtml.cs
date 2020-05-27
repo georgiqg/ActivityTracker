@@ -25,7 +25,9 @@ namespace ActivityTracker.Pages.ActivityLogs
         public string UnitNameSort { get; set; }
         public string TotalPointsSort { get; set; }
 
-        public async Task OnGetAsync(string sortOrder)
+        public string CurrentFilter { get; set; }
+
+        public async Task OnGetAsync(string sortOrder, string searchString)
         {
             // Properties used to toggle between ascending and descending order
             LogDateSort = sortOrder == null || sortOrder == "LogDateSort_desc" ? "LogDateSort" : "LogDateSort_desc";
@@ -34,10 +36,14 @@ namespace ActivityTracker.Pages.ActivityLogs
             UnitNameSort = sortOrder == "UnitNameSort" ? "UnitNameSort_desc" : "UnitNameSort";
             TotalPointsSort = sortOrder == "TotalPointsSort" ? "TotalPointsSort_desc" : "TotalPointsSort";
 
+            CurrentFilter = searchString;
+
             var activitiesList = _context.ActivityLog
                 .Include(a => a.Activity)
                 .Include(a => a.Activity.Unit)
-                .Include(a => a.Activity.CustomUnit).AsNoTracking().ToList();
+                .Include(a => a.Activity.CustomUnit)
+                .Where(a => string.IsNullOrWhiteSpace(searchString) || a.Activity.ActivityName.ToLower().Contains(searchString.ToLower()))
+                .AsNoTracking().ToList();
 
             // Setting the NotMapped properties inside ActivityLog and Activity. I'm doing it here to be able to order by those fields later
             activitiesList.ForEach(a => { a.SetTotalPoints(); a.Activity.SetUnitName(); });

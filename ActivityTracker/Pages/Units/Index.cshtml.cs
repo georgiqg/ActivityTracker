@@ -21,12 +21,18 @@ namespace ActivityTracker.Pages.Units
 
         public string UnitNameSort { get; set; }
 
-        public async Task OnGetAsync(string sortOrder)
+        public string CurrentFilter { get; set; }
+
+        public async Task OnGetAsync(string sortOrder, string searchString)
         {
             // Properties used to toggle between ascending and descending order
             UnitNameSort = sortOrder == null || sortOrder == "UnitNameSort" ? "UnitNameSort_desc" : "UnitNameSort";
 
-            var units = _context.Unit.AsQueryable();
+            CurrentFilter = searchString;
+
+            var units = _context.Unit
+                .Where(u => string.IsNullOrWhiteSpace(CurrentFilter) || u.UnitName.Contains(CurrentFilter))
+                .AsQueryable();
 
             switch (sortOrder)
             {

@@ -6,6 +6,7 @@ using ActivityTracker.Data;
 using ActivityTracker.Models;
 using System.Linq;
 using System;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ActivityTracker.Pages.Activities
 {
@@ -29,8 +30,11 @@ namespace ActivityTracker.Pages.Activities
         public string UnitSort { get; set; }
         public string CustomUnitSort { get; set; }
 
-        public async Task OnGetAsync(string sortOrder)
+        public string CurrentFilter { get; set; }
+
+        public async Task OnGetAsync(string sortOrder, string searchString)
         {
+
             ActivityNameSort = sortOrder == null || sortOrder == "ActivityName" ? "ActivityName_desc" : "ActivityName";
             PointsPerUnitSort = sortOrder == "PointsPerUnit" ? "PointsPerUnit_desc" : "PointsPerUnit";
             MaxPointsPerDaySort = sortOrder == "MaxPointsPerDay" ? "MaxPointsPerDay_desc" : "MaxPointsPerDay";
@@ -39,9 +43,12 @@ namespace ActivityTracker.Pages.Activities
             UnitSort = sortOrder == "Unit" ? "Unit_desc" : "Unit";
             CustomUnitSort = sortOrder == "CustomUnit" ? "CustomUnit_desc" : "CustomUnit";
 
+            CurrentFilter = searchString;
+
             IQueryable<Activity> activities = _context.Activity
                 .Include(a => a.CustomUnit)
-                .Include(a => a.Unit);
+                .Include(a => a.Unit)
+                .Where(a => string.IsNullOrWhiteSpace(searchString) || a.ActivityName.ToLower().Contains(searchString.ToLower()));
 
             switch (sortOrder)
             {
