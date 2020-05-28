@@ -30,7 +30,6 @@ namespace ActivityTracker.Pages.ActivityLogs
                 .ToList();
 
             Activities.ToList().ForEach(a => a.SetUnitName());
-
             ViewData["ActivityId"] = new SelectList(Activities, "ActivityId", "ActivityName");
             ViewData["strActivities"] = string.Join("|", Activities.Select(x => x.ActivityId + "#" + x.PointsPerUnit + "#" + x.MaxPointsPerDay + "#" + x.UnitName));
 
@@ -56,7 +55,10 @@ namespace ActivityTracker.Pages.ActivityLogs
                     .Include(a => a.Unit)
                     .OrderBy(a => a.ActivityName)
                     .ToList();
+
+                Activities.ToList().ForEach(a => a.SetUnitName());
                 ViewData["ActivityId"] = new SelectList(Activities, "ActivityId", "ActivityName");
+                ViewData["strActivities"] = string.Join("|", Activities.Select(x => x.ActivityId + "#" + x.PointsPerUnit + "#" + x.MaxPointsPerDay + "#" + x.UnitName));
 
                 return Page();
             }
